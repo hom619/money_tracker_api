@@ -6,7 +6,8 @@ const PORT = process.env.PORT || 8000;
 import { mongoDBConn } from "./config/mongoDBConfig.js";
 mongoDBConn();
 //Middlewares
-app.use(express.json);
+app.use(express.json());
+
 //API endPoints
 import userRouter from "./routers/userRouter.js";
 
