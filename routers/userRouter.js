@@ -1,6 +1,8 @@
 import express from "express";
 import { insertUser } from "../models/users/usersModel.js";
 import { hashPassword } from "../utilities/bcryptjs.js";
+import { getUserByEmail } from "../models/users/usersModel.js";
+import { comparePassword } from "../utilities/bcryptjs.js";
 const router = express.Router();
 
 // User signup
@@ -21,13 +23,46 @@ router.post("/", async (req, res, next) => {
           message: "Error while creating user. Please try again later",
         });
   } catch (error) {
+    let msg = error.message;
+    if (msg.includes("E11000 duplicate key error collection")) {
+      msg = "Email already exists. Please use another email";
+    }
     res.json({
       status: "error",
-      message: error.message,
+      message: msg,
     });
   }
 });
 // User Login
-
+router.post("/login", async (req, res, next) => {
+  try {
+    //receive email and password from the request body
+    const { email, password } = req.body;
+    //check if the user exists in the database
+    if (email && password) {
+      const user = await getUserByEmail(email);
+      if (user?._id) {
+        //check if the password is correct
+        const isPasswordValid = comparePassword(password, user.password);
+        if (isPasswordValid) {
+          user.password = undefined; //remove password from the user object
+          res.json({
+            status: "success",
+            message: "Login successful",
+            user,
+          });
+          return;
+        }
+      }
+      res.status(401).json({
+        error: "Invalid email or password",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+});
 // User Profile
 export default router;

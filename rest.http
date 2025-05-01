@@ -14,3 +14,12 @@ Content-Type: application/json
     "email": "hom@gmail.com",
     "password": "123"
 }
+
+###Login User
+POST http://localhost:8000/api/v1/users/login
+Content-Type: application/json
+
+{
+    "email": "hom@gmail.com",
+    "password": "123"
+}

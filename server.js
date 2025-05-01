@@ -7,7 +7,8 @@ import { mongoDBConn } from "./config/mongoDBConfig.js";
 mongoDBConn();
 //Middlewares
 app.use(express.json());
-
+import cors from "cors";
+app.use(cors());
 //API endPoints
 import userRouter from "./routers/userRouter.js";
 
