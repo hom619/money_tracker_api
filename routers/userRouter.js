@@ -3,6 +3,7 @@ import { insertUser } from "../models/users/usersModel.js";
 import { hashPassword } from "../utilities/bcryptjs.js";
 import { getUserByEmail } from "../models/users/usersModel.js";
 import { comparePassword } from "../utilities/bcryptjs.js";
+import { signJWT } from "../utilities/jwt.js";
 const router = express.Router();
 
 // User signup
@@ -45,11 +46,17 @@ router.post("/login", async (req, res, next) => {
         //check if the password is correct
         const isPasswordValid = comparePassword(password, user.password);
         if (isPasswordValid) {
+          //JWT and store it in the db and send it to the client
+          //sign the JWT with the user email
+          const accessJWT = signJWT({
+            email: user.email,
+          });
           user.password = undefined; //remove password from the user object
           res.json({
             status: "success",
             message: "Login successful",
             user,
+            accessJWT,
           });
           return;
         }
