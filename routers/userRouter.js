@@ -4,6 +4,7 @@ import { hashPassword } from "../utilities/bcryptjs.js";
 import { getUserByEmail } from "../models/users/usersModel.js";
 import { comparePassword } from "../utilities/bcryptjs.js";
 import { signJWT } from "../utilities/jwt.js";
+import { auth } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 // User signup
@@ -34,6 +35,22 @@ router.post("/", async (req, res, next) => {
     });
   }
 });
+//User Profile from the access token
+router.get("/", auth, (req, res, next) => {
+  try {
+    const user = req.userInfo;
+    user.password = undefined; //remove password from the user object
+    res.json({
+      status: "success",
+      message: "User profile",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+});
 // User Login
 router.post("/login", async (req, res, next) => {
   try {
@@ -47,7 +64,7 @@ router.post("/login", async (req, res, next) => {
         const isPasswordValid = comparePassword(password, user.password);
         if (isPasswordValid) {
           //JWT and store it in the db and send it to the client
-          //sign the JWT with the user email
+          //sign the JWT with the user email and password
           const accessJWT = signJWT({
             email: user.email,
           });

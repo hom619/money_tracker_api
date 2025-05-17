@@ -1,8 +1,10 @@
 ### testing api call
 
 ### User
+
 ###Get User
-GET http://localhost:8000/
+GET http://localhost:8000/api/v1/users
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbUBnbWFpbC5jb20iLCJpYXQiOjE3NDc0Nzc2ODQsImV4cCI6MTc0NzU2NDA4NH0.C-eiwVytGQpLKKG1zfa8UCeNLoPCcGAG1E4ZsqW8BxQ
 
 
 ###Post new User

@@ -6,3 +6,10 @@ export const signJWT = (obj) => {
   //store the token in the local storage of the browser
   return token;
 };
+export const verifyJWT = (token) => {
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
