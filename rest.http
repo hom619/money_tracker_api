@@ -4,7 +4,7 @@
 
 ###Get User
 GET http://localhost:8000/api/v1/users
-Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbUBnbWFpbC5jb20iLCJpYXQiOjE3NDc0Nzc2ODQsImV4cCI6MTc0NzU2NDA4NH0.C-eiwVytGQpLKKG1zfa8UCeNLoPCcGAG1E4ZsqW8BxQ
+
 
 
 ###Post new User
@@ -25,3 +25,18 @@ Content-Type: application/json
     "email": "hom@gmail.com",
     "password": "123"
 }
+
+
+### Transaction
+
+### Post new Transaction
+POST http://localhost:8000/api/v1/transactions
+Content-Type: application/json
+
+{
+    "type": "income",
+    "title": "Salary",
+    "amount": 1000, 
+    "tranDate": "2023-10-01"
+}
+

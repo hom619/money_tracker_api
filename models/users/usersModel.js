@@ -1,4 +1,4 @@
-import usersSchema from "../usersSchema.js";
+import usersSchema from "./usersSchema.js";
 
 //CRUD
 export const insertUser = (userObj) => {
