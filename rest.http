@@ -12,9 +12,9 @@ POST http://localhost:8000/api/v1/users
 Content-Type: application/json
 
 {
-    "name": "Hom",
-    "email": "hom@gmail.com",
-    "password": "123"
+    "name": "Aasish",
+    "email": "aasish@gmail.com",
+    "password": "aasish123"
 }
 
 ###Login User
@@ -40,3 +40,7 @@ Content-Type: application/json
     "tranDate": "2023-10-01"
 }
 
+
+### Get All Transactions
+
+GET http://localhost:8000/api/v1/transactions
