@@ -41,6 +41,15 @@ Content-Type: application/json
 }
 
 
-### Get All Transactions
+### Get All Transactions for a specific user
 
 GET http://localhost:8000/api/v1/transactions
+
+
+### Delete Transactions for a specific user
+
+DELETE http://localhost:8000/api/v1/transactions
+Content-Type:  application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbUBnbWFpbC5jb20iLCJpYXQiOjE3NDg4NzIzODcsImV4cCI6MTc0ODk1ODc4N30.MyYDzFzW-hk_DigQn-KgNwW19EjBRRZUOhUgD0k42-8
+
+["683d8f43cf93be132b9795a4","683d8fa8cf93be132b9795ad"]

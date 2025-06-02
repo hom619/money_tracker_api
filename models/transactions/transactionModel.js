@@ -11,3 +11,10 @@ export const getTransactionsByUserId = (userId) => {
   }
   return transactionSchema.find({ userId });
 };
+
+export const deleteTransactions = (userId, ids) => {
+  // if (!ids.length) {
+  //   throw new Error("Transaction ID is required to delete a transaction.");
+  // }
+  return transactionSchema.deleteMany({ userId, _id: { $in: ids } });
+};

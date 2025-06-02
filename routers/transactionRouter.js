@@ -2,6 +2,7 @@ import express from "express";
 import {
   getTransactionsByUserId,
   insertTransaction,
+  deleteTransactions,
 } from "../models/transactions/transactionModel.js";
 const router = express.Router();
 //insert Transaction
@@ -46,6 +47,27 @@ router.get("/", async (req, res) => {
       message:
         error?.message ||
         "Error while fetching transactions. Please try again later",
+    });
+  }
+});
+router.delete("/", async (req, res) => {
+  try {
+    const ids = req.body;
+    const { _id } = req.userInfo;
+    const result = await deleteTransactions(_id, ids);
+    result?.deletedCount
+      ? res.json({
+          status: "success",
+          message: result.deletedCount + "Transaction deleted successfully",
+        })
+      : res.json({
+          status: "error",
+          message: "Error while deleting transaction. Please try again later",
+        });
+  } catch (error) {
+    res.json({
+      status: "error",
+      message: error.message,
     });
   }
 });
