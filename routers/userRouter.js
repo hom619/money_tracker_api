@@ -25,14 +25,11 @@ router.post("/", async (req, res, next) => {
           message: "Error while creating user. Please try again later",
         });
   } catch (error) {
-    let msg = error.message;
-    if (msg.includes("E11000 duplicate key error collection")) {
-      msg = "Email already exists. Please use another email";
+    if (error.message.includes("E11000 duplicate key error collection")) {
+      error.message = "Email already exists. Please use another email";
     }
-    res.json({
-      status: "error",
-      message: msg,
-    });
+    error.statusCode = 200; //set status code to 400 for bad request
+    next(error); //pass the error to the error handler
   }
 });
 //User Profile from the access token
@@ -46,9 +43,7 @@ router.get("/", auth, (req, res, next) => {
       user,
     });
   } catch (error) {
-    res.status(500).json({
-      error: error.message,
-    });
+    next(error);
   }
 });
 // User Login
@@ -83,9 +78,7 @@ router.post("/login", async (req, res, next) => {
       });
     }
   } catch (error) {
-    res.status(500).json({
-      error: error.message,
-    });
+    next(error);
   }
 });
 // User Profile

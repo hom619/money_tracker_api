@@ -20,6 +20,18 @@ app.get("/", (req, res) => {
     message: "Its live",
   });
 });
+
+//404 page not found
+app.use((req, res, next) => {
+  const error = new Error("Page not found");
+  error.statusCode = 404;
+  next(error);
+});
+
+//Error handler
+import { errorHandler } from "./middlewares/errorHandler.js";
+app.use(errorHandler);
+
 app.listen(PORT, (error) => {
   error
     ? console.log(error)

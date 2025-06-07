@@ -22,18 +22,19 @@ router.post("/", async (req, res, next) => {
       message: "Transaction added successfully",
     });
   } catch (error) {
-    res.json({
-      status: "error",
-      message:
-        error?.message ||
-        "Error while adding transaction. Please try again later",
-    });
+    next(error);
+    // res.json({
+    //   status: "error",
+    //   message:
+    //     error?.message ||
+    //     "Error while adding transaction. Please try again later",
+    // });
   }
 });
 
 // Return all transaction of a specific user
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const { _id } = req.userInfo;
     const transactions = (await getTransactionsByUserId({ _id })) || [];
@@ -42,15 +43,10 @@ router.get("/", async (req, res) => {
       transactions,
     });
   } catch (error) {
-    res.json({
-      status: "error",
-      message:
-        error?.message ||
-        "Error while fetching transactions. Please try again later",
-    });
+    next(error);
   }
 });
-router.delete("/", async (req, res) => {
+router.delete("/", async (req, res, next) => {
   try {
     const ids = req.body;
     const { _id } = req.userInfo;
@@ -65,10 +61,7 @@ router.delete("/", async (req, res) => {
           message: "Error while deleting transaction. Please try again later",
         });
   } catch (error) {
-    res.json({
-      status: "error",
-      message: error.message,
-    });
+    next(error);
   }
 });
 export default router;
