@@ -3,6 +3,7 @@ import {
   getTransactionsByUserId,
   insertTransaction,
   deleteTransactions,
+  updateTransactions,
 } from "../models/transactions/transactionModel.js";
 const router = express.Router();
 //insert Transaction
@@ -46,6 +47,30 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
+
+//Update Transaction
+router.patch("/", async (req, res, next) => {
+  try {
+    const { _userId } = req.userInfo;
+    const { transactionId, ...rest } = req.body;
+    console.log(transactionId, rest);
+    const result = await updateTransactions(transactionId, rest.form);
+    console.log(result);
+    result?._id
+      ? res.json({
+          status: "success",
+          message: "Transaction updated successfully",
+        })
+      : res.json({
+          status: "error",
+          message: "Error while updating transaction. Please try again later",
+        });
+  } catch (error) {
+    next(error);
+  }
+});
+
+//Delete Transaction
 router.delete("/", async (req, res, next) => {
   try {
     const ids = req.body;

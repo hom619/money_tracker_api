@@ -44,7 +44,21 @@ Content-Type: application/json
 ### Get All Transactions for a specific user
 
 GET http://localhost:8000/api/v1/transactions
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbUBnbWFpbC5jb20iLCJpYXQiOjE3NDk5ODgyMTYsImV4cCI6MTc1MDA3NDYxNn0.4QrQEqffgsIOAchzTYF6zMeu1ueYGRi465FNCdM1imU
 
+
+### Update Transaction for a specific user
+PATCH http://localhost:8000/api/v1/transactions
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbUBnbWFpbC5jb20iLCJpYXQiOjE3NDk5ODg2ODgsImV4cCI6MTc1MDA3NTA4OH0.c1zz7AVOWHAmb9sUPY1pS5RuOzWehMqTTvU48_bjczE
+
+{
+    "_id": "68305e03aaa6811a5b720421",
+    "type": "expense",
+    "title": "Groceries",
+    "amount": 500,
+    "tranDate": "2023-11-02"
+}
 
 ### Delete Transactions for a specific user
 
