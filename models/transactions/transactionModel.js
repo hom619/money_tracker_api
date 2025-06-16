@@ -17,9 +17,12 @@ export const updateTransactions = (_id, rest) => {
     new: true,
   });
 };
+export const deleteTransactionById = (userId, _id) => {
+  return transactionSchema.deleteOne({
+    userId,
+    _id: _id,
+  });
+};
 export const deleteTransactions = (userId, ids) => {
-  // if (!ids.length) {
-  //   throw new Error("Transaction ID is required to delete a transaction.");
-  // }
   return transactionSchema.deleteMany({ userId, _id: { $in: ids } });
 };

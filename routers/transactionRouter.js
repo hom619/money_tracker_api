@@ -4,6 +4,7 @@ import {
   insertTransaction,
   deleteTransactions,
   updateTransactions,
+  deleteTransactionById,
 } from "../models/transactions/transactionModel.js";
 const router = express.Router();
 //insert Transaction
@@ -51,11 +52,8 @@ router.get("/", async (req, res, next) => {
 //Update Transaction
 router.patch("/", async (req, res, next) => {
   try {
-    const { _userId } = req.userInfo;
     const { transactionId, ...rest } = req.body;
-    console.log(transactionId, rest);
     const result = await updateTransactions(transactionId, rest.form);
-    console.log(result);
     result?._id
       ? res.json({
           status: "success",
@@ -80,6 +78,24 @@ router.delete("/", async (req, res, next) => {
       ? res.json({
           status: "success",
           message: result.deletedCount + "Transaction deleted successfully",
+        })
+      : res.json({
+          status: "error",
+          message: "Error while deleting transaction. Please try again later",
+        });
+  } catch (error) {
+    next(error);
+  }
+});
+router.delete("/id", async (req, res, next) => {
+  try {
+    const { transactionId } = req.body;
+    const { _id } = req.userInfo;
+    const result = await deleteTransactionById(_id, transactionId);
+    result?.deletedCount
+      ? res.json({
+          status: "success",
+          message: "Transaction deleted successfully",
         })
       : res.json({
           status: "error",
