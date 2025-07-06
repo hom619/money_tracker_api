@@ -77,7 +77,7 @@ router.delete("/", async (req, res, next) => {
     result?.deletedCount
       ? res.json({
           status: "success",
-          message: result.deletedCount + "Transaction deleted successfully",
+          message: result.deletedCount + " Transaction(s) deleted successfully",
         })
       : res.json({
           status: "error",
